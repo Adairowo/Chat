@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('avatar')->nullable(); // URL de la foto
+            $table->boolean('is_online')->default(false);
+            $table->timestamp('last_seen')->nullable();
         });
     }
 
