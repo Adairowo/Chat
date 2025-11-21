@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'adair@test.com',
             'password' => Hash::make('password'),
             'is_online' => true,
+            'role' => 'admin',
         ]);
 
         // Create 10 random users

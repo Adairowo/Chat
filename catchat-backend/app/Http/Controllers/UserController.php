@@ -27,6 +27,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'avatar' => 'nullable|string',
+            'role' => 'in:user,admin',
         ]);
 
         $user = User::create([
@@ -34,6 +35,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'avatar' => $validated['avatar'] ?? null,
+            'role' => $validated['role'] ?? 'user',
         ]);
 
         return response()->json($user, 201);
@@ -61,6 +63,7 @@ class UserController extends Controller
             'avatar' => 'nullable|string',
             'is_online' => 'boolean',
             'last_seen' => 'nullable|date',
+            'role' => 'in:user,admin',
         ]);
 
         if (isset($validated['password'])) {
