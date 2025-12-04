@@ -12,20 +12,20 @@ function Navbar() {
                 </summary>
                 <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-sm bg-base-100 rounded-box w-52">
                     <li>
-                        <a className="btn btn-ghost">About Us</a>
+                        <a className="btn btn-ghost">Acerca de</a>
                     </li>
                     <li>
-                        <a className="btn btn-ghost">Screenshots</a>
+                        <a className="btn btn-ghost">Capturas</a>
                     </li>
                 </ul>
             </details>
 
             <div className="flex-none hidden md:flex">
                 <a href="#" className="btn btn-ghost">
-                    <p className="text-base-content">About Us</p>
+                    <p className="text-base-content">Acerca de</p>
                 </a>
                 <a href="#" className="btn btn-ghost">
-                    <p className="text-base-content">Screenshots</p>
+                    <p className="text-base-content">Capturas</p>
                 </a>
             </div>
         </div>

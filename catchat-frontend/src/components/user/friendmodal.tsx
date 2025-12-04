@@ -1,21 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import api from '../../services/api';
 
-interface SendMessageModalProps {
+interface FriendModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-interface MessageData {
-    username: string;
-    message: string;
+interface FriendRequestData {
+    email: string;
 }
 
-function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
+function FriendModal({ isOpen, onClose }: FriendModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
-    const [formData, setFormData] = useState<MessageData>({
-        username: '',
-        message: ''
+    const [formData, setFormData] = useState<FriendRequestData>({
+        email: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -35,11 +33,11 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
     const handleClose = () => {
         setError('');
         setSuccessMessage('');
-        setFormData({ username: '', message: '' });
+        setFormData({ email: '' });
         onClose();
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -47,27 +45,25 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
         }));
     };
 
-    const handleSendMessage = async (e: React.FormEvent) => {
+    const handleSendRequest = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
         setSuccessMessage('');
 
         try {
-            // You can modify this endpoint according to your backend API
-            await api.post('/messages/send', {
-                to_username: formData.username,
-                message: formData.message
+            await api.post('/friend-request/send', {
+                email: formData.email
             });
 
-            setSuccessMessage('¡Mensaje enviado exitosamente!');
-            setFormData({ username: '', message: '' });
+            setSuccessMessage('¡Solicitud de amistad enviada exitosamente!');
+            setFormData({ email: '' });
 
             setTimeout(() => {
                 handleClose();
             }, 1500);
         } catch (err: any) {
-            setError(err.response?.data?.message || 'Error al enviar el mensaje');
+            setError(err.response?.data?.message || 'Error al enviar la solicitud');
         } finally {
             setLoading(false);
         }
@@ -76,7 +72,7 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
     return (
         <dialog ref={dialogRef} className="modal" onClose={handleClose}>
             <div className="modal-box w-11/12 max-w-md">
-                <h3 className="font-bold text-lg mb-4">Enviar Mensaje</h3>
+                <h3 className="font-bold text-lg mb-4">Agregar amigo</h3>
 
                 <form method="dialog">
                     <button
@@ -105,40 +101,23 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
                     </div>
                 )}
 
-                {/* Message Form */}
-                <form onSubmit={handleSendMessage} className="space-y-4">
+                {/* Friend Request Form */}
+                <form onSubmit={handleSendRequest} className="space-y-4">
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Nombre de Usuario</span>
+                            <span className="label-text">Correo Electrónico</span>
                         </label>
                         <input
-                            type="text"
-                            name="username"
-                            value={formData.username}
+                            type="email"
+                            name="email"
+                            value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="@usuario_amigo"
+                            placeholder="usuario@ejemplo.com"
                             className="input input-bordered w-full"
                             required
                         />
                         <label className="label">
-                            <span className="label-text-alt">Ingresa el nombre de usuario del destinatario</span>
-                        </label>
-                    </div>
-
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Mensaje</span>
-                        </label>
-                        <textarea
-                            name="message"
-                            value={formData.message}
-                            onChange={handleInputChange}
-                            className="textarea textarea-bordered h-32"
-                            placeholder="Escribe tu mensaje aquí..."
-                            required
-                        ></textarea>
-                        <label className="label">
-                            <span className="label-text-alt">{formData.message.length} caracteres</span>
+                            <span className="label-text-alt">Para agregar un amigo ingresa su correo electrónico</span>
                         </label>
                     </div>
 
@@ -165,9 +144,9 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
                             ) : (
                                 <>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                        <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
                                     </svg>
-                                    Enviar
+                                    Enviar solicitud
                                 </>
                             )}
                         </button>
@@ -183,4 +162,4 @@ function SendMessageModal({ isOpen, onClose }: SendMessageModalProps) {
     );
 }
 
-export default SendMessageModal;
+export default FriendModal;

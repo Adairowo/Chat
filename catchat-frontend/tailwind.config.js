@@ -55,6 +55,7 @@ export default {
     utils: true,
     logs: true,
     rtl: false,
+    prefix: "", // Habilita las variantes is-drawer-close y is-drawer-open
   },
 }
 

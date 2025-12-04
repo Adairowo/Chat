@@ -30,4 +30,13 @@ Route::group([
     Route::post('profile', [\App\Http\Controllers\AuthController::class, 'updateProfile']);
 });
 
+Route::group(['middleware' => ['api', 'auth:api']], function () {
+    Route::post('friend-request/send', [\App\Http\Controllers\FriendRequestController::class, 'sendRequest']);
+    Route::get('friend-request/pending', [\App\Http\Controllers\FriendRequestController::class, 'getPendingRequests']);
+    Route::post('friend-request/accept/{id}', [\App\Http\Controllers\FriendRequestController::class, 'acceptRequest']);
+    Route::post('friend-request/reject/{id}', [\App\Http\Controllers\FriendRequestController::class, 'rejectRequest']);
+    Route::get('friends', [\App\Http\Controllers\FriendRequestController::class, 'getFriends']);
+    Route::delete('friends/{id}', [\App\Http\Controllers\FriendRequestController::class, 'removeFriend']);
+});
+
 Route::apiResource('users', \App\Http\Controllers\UserController::class);
