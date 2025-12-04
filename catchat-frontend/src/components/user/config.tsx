@@ -7,7 +7,7 @@ interface ConfigModalProps {
 
 function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
-    const [theme, setTheme] = useState<string>('light');
+    const [theme, setTheme] = useState<string>('coffee');
     const [language, setLanguage] = useState<string>('es');
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
 
     const loadSettings = () => {
         // Cargar configuraciones desde localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = localStorage.getItem('theme') || 'coffee';
         const savedLanguage = localStorage.getItem('language') || 'es';
 
         setTheme(savedTheme);
@@ -50,27 +50,8 @@ function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
     };
 
     const themes = [
-        { value: 'light', label: 'Claro', icon: '☀️' },
-        { value: 'dark', label: 'Oscuro', icon: '🌙' },
-        { value: 'cupcake', label: 'Cupcake', icon: '🧁' },
-        { value: 'bumblebee', label: 'Bumblebee', icon: '🐝' },
-        { value: 'emerald', label: 'Esmeralda', icon: '💚' },
-        { value: 'corporate', label: 'Corporativo', icon: '💼' },
-        { value: 'synthwave', label: 'Synthwave', icon: '🌆' },
-        { value: 'retro', label: 'Retro', icon: '📻' },
-        { value: 'cyberpunk', label: 'Cyberpunk', icon: '🤖' },
-        { value: 'valentine', label: 'Valentine', icon: '💖' },
-        { value: 'halloween', label: 'Halloween', icon: '🎃' },
-        { value: 'garden', label: 'Garden', icon: '🌺' },
-        { value: 'forest', label: 'Forest', icon: '🌲' },
-        { value: 'aqua', label: 'Aqua', icon: '💧' },
-        { value: 'lofi', label: 'Lo-Fi', icon: '🎵' },
-        { value: 'pastel', label: 'Pastel', icon: '🎨' },
-        { value: 'fantasy', label: 'Fantasy', icon: '🦄' },
-        { value: 'wireframe', label: 'Wireframe', icon: '📐' },
-        { value: 'black', label: 'Negro', icon: '⬛' },
-        { value: 'luxury', label: 'Luxury', icon: '💎' },
-        { value: 'dracula', label: 'Dracula', icon: '🧛' }
+        { value: 'coffee', label: 'Oscuro', icon: '🌙' },
+        { value: 'caramellatte', label: 'Claro', icon: '☀️' }
     ];
 
     const languages = [
@@ -101,20 +82,26 @@ function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
                         <h4 className="font-semibold text-md mb-3 flex items-center gap-2">
                             Tema de la aplicación
                         </h4>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 max-h-80 overflow-y-auto p-2">
-                            {themes.map((themeOption) => (
-                                <button
-                                    key={themeOption.value}
-                                    type="button"
-                                    onClick={() => handleThemeChange(themeOption.value)}
-                                    className={`btn btn-outline ${theme === themeOption.value ? 'btn-active' : ''
-                                        } justify-start gap-2`}
-                                    data-theme={themeOption.value}
-                                >
-                                    <span className="text-lg">{themeOption.icon}</span>
-                                    <span className="text-sm">{themeOption.label}</span>
-                                </button>
-                            ))}
+                        <div className="dropdown dropdown-bottom">
+                            <div tabIndex={0} role="button" className="btn m-1 w-full justify-between">
+                                <span className="flex items-center gap-2">
+                                    {themes.find(t => t.value === theme)?.icon}
+                                    {themes.find(t => t.value === theme)?.label}
+                                </span>
+                                <svg width="12px" height="12px" className="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+                            </div>
+                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                {themes.map((themeOption) => (
+                                    <li key={themeOption.value}>
+                                        <button
+                                            onClick={() => handleThemeChange(themeOption.value)}
+                                            className={theme === themeOption.value ? 'active' : ''}
+                                        >
+                                            {themeOption.icon} {themeOption.label}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
 

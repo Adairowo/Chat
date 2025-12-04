@@ -3,15 +3,16 @@ import api from '../../services/api';
 
 interface FriendListProps {
     onSwitch: () => void;
+    onChatStart: (user: User) => void;
 }
 
 interface User {
     id: number;
-    username: string;
-    profile_image?: string;
+    name: string;
+    avatar?: string;
 }
 
-const FriendList: React.FC<FriendListProps> = ({ onSwitch }) => {
+const FriendList: React.FC<FriendListProps> = ({ onSwitch, onChatStart }) => {
     const [friends, setFriends] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -61,17 +62,21 @@ const FriendList: React.FC<FriendListProps> = ({ onSwitch }) => {
                                 <div className="avatar">
                                     <div className="w-12 h-12 rounded-full">
                                         <img
-                                            src={friend.profile_image ? `http://localhost:8000/storage/${friend.profile_image}` : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
-                                            alt={friend.username}
+                                            src={friend.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                                            alt={friend.name}
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="font-bold">{friend.username}</p>
+                                    <p className="font-bold">{friend.name}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <button className="btn btn-sm btn-primary btn-circle" title="Enviar mensaje">
+                                <button
+                                    className="btn btn-sm btn-primary btn-circle"
+                                    title="Enviar mensaje"
+                                    onClick={() => onChatStart(friend)}
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                     </svg>

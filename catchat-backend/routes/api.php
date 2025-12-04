@@ -37,6 +37,11 @@ Route::group(['middleware' => ['api', 'auth:api']], function () {
     Route::post('friend-request/reject/{id}', [\App\Http\Controllers\FriendRequestController::class, 'rejectRequest']);
     Route::get('friends', [\App\Http\Controllers\FriendRequestController::class, 'getFriends']);
     Route::delete('friends/{id}', [\App\Http\Controllers\FriendRequestController::class, 'removeFriend']);
+
+    // Message routes
+    Route::post('messages/send', [\App\Http\Controllers\MessageController::class, 'sendMessage']);
+    Route::get('messages/{userId}', [\App\Http\Controllers\MessageController::class, 'getMessages']);
+    Route::get('conversations', [\App\Http\Controllers\MessageController::class, 'getConversations']);
 });
 
 Route::apiResource('users', \App\Http\Controllers\UserController::class);

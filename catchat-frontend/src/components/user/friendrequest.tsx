@@ -7,8 +7,8 @@ interface FriendRequestProps {
 
 interface User {
     id: number;
-    username: string;
-    profile_image?: string;
+    name: string;
+    avatar?: string;
 }
 
 interface FriendRequest {
@@ -74,13 +74,13 @@ const FriendRequest: React.FC<FriendRequestProps> = ({ onSwitch }) => {
                                 <div className="avatar">
                                     <div className="w-12 h-12 rounded-full">
                                         <img
-                                            src={request.sender.profile_image ? `http://localhost:8000/storage/${request.sender.profile_image}` : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
-                                            alt={request.sender.username}
+                                            src={request.sender.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                                            alt={request.sender.name}
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="font-bold">{request.sender.username}</p>
+                                    <p className="font-bold">{request.sender.name}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">

@@ -18,6 +18,7 @@ class ApiService {
         // Agregar token de autenticación si existe
         const token = localStorage.getItem('auth_token');
         const headers: Record<string, string> = {
+            'Accept': 'application/json',
             ...options.headers,
         };
 

@@ -142,7 +142,7 @@ function ProfileConfig({ isOpen, onClose }: ProfileConfigProps) {
                 <div className="flex flex-col items-center mb-6">
                     <div className="avatar mb-4">
                         <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                            <img src={previewUrl || profile.avatar} alt="Profile" />
+                            <img src={previewUrl || profile.avatar || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'} alt="Profile" />
                         </div>
                     </div>
                     <input
